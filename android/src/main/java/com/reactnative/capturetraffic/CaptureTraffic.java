@@ -6,9 +6,14 @@ import android.content.Intent;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.github.megatronking.netbare.NetBare;
+import com.github.megatronking.netbare.NetBareConfig;
+import com.github.megatronking.netbare.http.HttpInjectInterceptor;
+import com.github.megatronking.netbare.http.HttpInterceptorFactory;
 import com.github.megatronking.netbare.ssl.JKS;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class CaptureTraffic implements ActivityEventListener {
 
@@ -61,5 +66,14 @@ public class CaptureTraffic implements ActivityEventListener {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_PREPARE) {
             prepareVpn();
         }
+    }
+
+    public void startVpn(){
+        this.mNetBare.start(NetBareConfig.defaultHttpConfig(mJKS, interceptorFactories()));
+    }
+
+    private List<HttpInterceptorFactory> interceptorFactories() {
+        HttpInterceptorFactory injector1 = HttpInjectInterceptor.createFactory(new HttpInjector());
+        return Arrays.asList(injector1);
     }
 }
