@@ -4,8 +4,10 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.github.megatronking.netbare.NetBare;
 import com.github.megatronking.netbare.ssl.JKS;
 
+import java.io.IOException;
 
 public class CaptureTraffic {
+
 
     private static final String TAG = CaptureTraffic.class.getSimpleName();
 
@@ -21,5 +23,18 @@ public class CaptureTraffic {
 
         mJKS = new JKS(context, certificate.getAlias(), certificate.getPassword().toCharArray(), certificate.getCommonName(), certificate.getOrganization(),
                 certificate.getOrganizationalUnitName(), certificate.getCertOrganization(), certificate.getCertOrganizationalUnitName());
+    }
+
+    public boolean installCertificate(){
+        if (!JKS.isInstalled(this.reactContext, mCertificate.getAlias())) {
+            try {
+                JKS.install(this.reactContext, mCertificate.getAlias(), mCertificate.getAlias());
+                return true;
+            } catch(IOException e) {
+                // a callback error
+                return false;
+            }
+        }else
+            return true;
     }
 }
