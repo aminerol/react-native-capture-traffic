@@ -1,8 +1,14 @@
 package com.reactnative.capturetraffic;
 
+import android.support.annotation.Nullable;
+
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.github.megatronking.netbare.NetBare;
 import com.github.megatronking.netbare.NetBareListener;
 
@@ -38,7 +44,16 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
   public void onCatalystInstanceDestroy() {
     super.onCatalystInstanceDestroy();
     this.mNetBare.unregisterNetBareListener(this);
+    this.mNetBare.stop();
     this.mCaptureTraffic.destroy();
+  }
+
+  private void sendEvent(ReactContext reactContext,
+                         String eventName,
+                         @Nullable WritableMap params) {
+    reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(eventName, params);
   }
 
   @ReactMethod
@@ -53,16 +68,30 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
             .setCertOrganization(mCertOrganization)
             .setCertOrganizationalUnitName(mCertOrganizationalUnitName);
     mCaptureTraffic = new CaptureTraffic(this.reactContext, this.mNetBare, cert);
+  }
 
+  @ReactMethod
+  public void installCertificate(Callback success, Callback error){
+    mCaptureTraffic.installCertificate(success, error);
+  }
+
+  @ReactMethod
+  public void prepareVpn(){
+    mCaptureTraffic.prepareVpn();
+  }
+
+  @ReactMethod
+  public void startVpn(){
+    mCaptureTraffic.startVpn();
   }
 
   @Override
   public void onServiceStarted() {
-
+    sendEvent(this.reactContext, "onServiceStarted", null);
   }
 
   @Override
   public void onServiceStopped() {
-
+    sendEvent(this.reactContext, "onServiceStopped", null);
   }
 }
