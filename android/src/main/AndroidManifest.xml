@@ -2,5 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.reactnative.capturetraffic">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <application>
+        <service android:name="com.github.megatronking.netbare.NetBareService"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+                <action android:name="com.github.megatronking.netbare.action.Start"/>
+                <action android:name="com.github.megatronking.netbare.action.Stop"/>
+            </intent-filter>
+        </service>
+    </application>
+
 </manifest>
   

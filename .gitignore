@@ -45,3 +45,5 @@ buck-out/
 *.keystore
       
 RNCaptureTrafficExample/
+
+android/gradle/
