@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.github.megatronking.netbare.NetBare;
 import com.github.megatronking.netbare.NetBareConfig;
@@ -40,17 +41,16 @@ public class CaptureTraffic implements ActivityEventListener {
         this.reactContext.removeActivityEventListener(this);
     }
 
-    public boolean installCertificate(){
+    public void installCertificate(Callback success, Callback error){
         if (!JKS.isInstalled(this.reactContext, mCertificate.getAlias())) {
             try {
                 JKS.install(this.reactContext, mCertificate.getAlias(), mCertificate.getAlias());
-                return true;
+                success.invoke();
             } catch(IOException e) {
-                // a callback error
-                return false;
+                error.invoke(e);
             }
         }else
-            return true;
+            success.invoke();
     }
 
     public void prepareVpn(){
@@ -62,7 +62,6 @@ public class CaptureTraffic implements ActivityEventListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        this.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_PREPARE) {
             prepareVpn();
         }
