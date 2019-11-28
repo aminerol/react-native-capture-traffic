@@ -38,6 +38,7 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
   public void onCatalystInstanceDestroy() {
     super.onCatalystInstanceDestroy();
     this.mNetBare.unregisterNetBareListener(this);
+    this.mCaptureTraffic.destroy();
   }
 
   @ReactMethod
