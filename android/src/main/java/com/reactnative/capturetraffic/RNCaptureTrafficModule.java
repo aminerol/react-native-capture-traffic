@@ -4,8 +4,9 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.github.megatronking.netbare.NetBare;
+import com.github.megatronking.netbare.NetBareListener;
 
-public class RNCaptureTrafficModule extends ReactContextBaseJavaModule {
+public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implements NetBareListener {
 
   private final ReactApplicationContext reactContext;
 
@@ -30,6 +31,13 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule {
     super.initialize();
 
     this.mNetBare.attachApplication(this.reactContext, BuildConfig.DEBUG);
+    this.mNetBare.registerNetBareListener(this);
+  }
+
+  @Override
+  public void onCatalystInstanceDestroy() {
+    super.onCatalystInstanceDestroy();
+    this.mNetBare.unregisterNetBareListener(this);
   }
 
   @ReactMethod
@@ -44,6 +52,16 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule {
             .setCertOrganization(mCertOrganization)
             .setCertOrganizationalUnitName(mCertOrganizationalUnitName);
     mCaptureTraffic = new CaptureTraffic(this.reactContext, this.mNetBare, cert);
+
+  }
+
+  @Override
+  public void onServiceStarted() {
+
+  }
+
+  @Override
+  public void onServiceStopped() {
 
   }
 }
