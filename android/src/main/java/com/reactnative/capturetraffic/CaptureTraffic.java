@@ -31,6 +31,10 @@ public class CaptureTraffic implements ActivityEventListener {
                 certificate.getOrganizationalUnitName(), certificate.getCertOrganization(), certificate.getCertOrganizationalUnitName());
     }
 
+    public void destroy(){
+        this.reactContext.removeActivityEventListener(this);
+    }
+
     public boolean installCertificate(){
         if (!JKS.isInstalled(this.reactContext, mCertificate.getAlias())) {
             try {
