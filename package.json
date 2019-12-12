@@ -1,17 +1,33 @@
 {
   "name": "react-native-capture-traffic",
+  "title": "React Native Capture Traffic",
   "version": "1.0.0",
-  "description": "",
+  "description": "TODO",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aminerol/react-native-capture-traffic.git",
+    "baseUrl": "https://github.com/aminerol/react-native-capture-traffic"
+  },
   "keywords": [
     "react-native"
   ],
-  "author": "",
-  "license": "",
+  "author": {
+    "name": "Amine Bl",
+    "email": "zazamine8@gmail.com"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
   "peerDependencies": {
-    "react-native": "^0.41.2"
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
   }
 }
