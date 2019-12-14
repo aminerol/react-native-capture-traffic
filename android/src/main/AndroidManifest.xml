@@ -3,8 +3,14 @@
           package="com.reactnative.capturetraffic">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application>
+        <activity android:name="com.github.megatronking.netbare.ssl.CertificateInstallActivity"
+                android:theme="@style/NetBare"
+                android:excludeFromRecents="true"/>
         <service android:name="com.github.megatronking.netbare.NetBareService"
             android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
