@@ -2,14 +2,10 @@ package com.reactnative.capturetraffic;
 
 import androidx.annotation.Nullable;
 
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.github.megatronking.netbare.NetBare;
 import com.github.megatronking.netbare.NetBareListener;
 
@@ -50,14 +46,6 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
         this.mCaptureTraffic.destroy();
     }
 
-    private void sendEvent(ReactContext reactContext,
-                           String eventName,
-                           @Nullable WritableMap params) {
-        reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
-    }
-
     @ReactMethod
     public void setCertificate(String mAlias, String mPassword, String mCommonName, String mOrganization, String mOrganizationalUnitName,
                                String mCertOrganization, String mCertOrganizationalUnitName) {
@@ -95,11 +83,11 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
 
     @Override
     public void onServiceStarted() {
-        sendEvent(this.reactContext, "onServiceStarted", null);
+        Utils.sendEvent(this.reactContext, "onServiceStarted", null);
     }
 
     @Override
     public void onServiceStopped() {
-        sendEvent(this.reactContext, "onServiceStopped", null);
+        Utils.sendEvent(this.reactContext, "onServiceStopped", null);
     }
 }
