@@ -55,22 +55,45 @@ public class CaptureTraffic implements ActivityEventListener {
             promise.resolve(false);
     }
 
-    public void prepareVpn(){
-        Intent intent = this.mNetBare.prepare();
-        if (intent != null) {
-            reactContext.startActivityForResult(intent, REQUEST_CODE_PREPARE, null);
-        }
+    @Override
+    public void onNewIntent(Intent intent){
+
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_PREPARE) {
-            prepareVpn();
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        if (resultCode == activity.RESULT_OK && requestCode == REQUEST_CODE_PREPARE) {
+            this.startVpn(mVpnPromise);
+        }else{
+            mVpnPromise.reject("E_VPN_NOT_READY", "VPN Connection Cancelled By user");
         }
     }
 
-    public void startVpn(){
-        this.mNetBare.start(NetBareConfig.defaultHttpConfig(mJKS, interceptorFactories()));
+    public void startVpn(final Promise promise){
+        mVpnPromise = promise;
+        try{
+            if(!this.mNetBare.isActive()){
+                Intent intent = this.mNetBare.prepare();
+                if (intent != null) {
+                    reactContext.startActivityForResult(intent, REQUEST_CODE_PREPARE, null);
+                    return;
+                }
+                this.mNetBare.start(NetBareConfig.defaultHttpConfig(mJKS, interceptorFactories()));
+            }
+            promise.resolve(null);
+        }catch(Exception e){
+            mVpnPromise.reject(e);
+        }
+    }
+
+    public void stopVpn(final Promise promise){
+        try{
+            if(this.mNetBare.isActive())
+                this.mNetBare.stop();
+            promise.resolve(null);
+        }catch(Exception e){
+            mVpnPromise.reject(e);
+        }
     }
 
     private List<HttpInterceptorFactory> interceptorFactories() {
