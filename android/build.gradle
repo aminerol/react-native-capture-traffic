@@ -61,12 +61,13 @@ android {
 }
 
 dependencies {
-    
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.facebook.react:react-native:+'
     netbarecoreImplementation 'com.android.support:appcompat-v7:28.0.0'
     netbarecoreImplementation 'org.bouncycastle:bcpkix-jdk15on:1.56'
     netbarecoreImplementation 'org.bouncycastle:bcprov-jdk15on:1.56'
     netbarecoreImplementation 'com.google.guava:guava:19.0'
+
+    implementation 'com.github.electrode-io:react-native-electrode-bridge:2.0.2'
 }
   
