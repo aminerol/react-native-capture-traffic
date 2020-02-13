@@ -9,6 +9,15 @@ import com.facebook.react.bridge.ReactMethod;
 import com.github.megatronking.netbare.NetBare;
 import com.github.megatronking.netbare.NetBareListener;
 
+//import com.walmartlabs.electrode.reactnative.bridge.ElectrodeBridgeEventListener;
+//import com.walmartlabs.electrode.reactnative.bridge.ElectrodeBridgeHolder;
+//import com.walmartlabs.electrode.reactnative.bridge.EventListenerProcessor;
+import com.walmartlabs.electrode.reactnative.bridge.ElectrodeBridgeHolder;
+import com.walmartlabs.electrode.reactnative.bridge.EventProcessor;
+import com.walmartlabs.electrode.reactnative.bridge.None;
+import com.walmartlabs.electrode.reactnative.bridge.helpers.Logger;
+import com.walmartlabs.electrode.reactnative.bridge.ElectrodeBridgeEvent;
+
 public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implements NetBareListener {
 
     private final ReactApplicationContext reactContext;
@@ -34,7 +43,8 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
     public void initialize() {
         super.initialize();
 
-        this.mNetBare.attachApplication(this.reactContext, BuildConfig.DEBUG);
+        Logger.overrideLogLevel(Logger.LogLevel.DEBUG);
+        this.mNetBare.attachApplication(this.reactContext, false);
         this.mNetBare.registerNetBareListener(this);
     }
 
@@ -57,12 +67,12 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
                 .setOrganizationalUnitName(mOrganizationalUnitName)
                 .setCertOrganization(mCertOrganization)
                 .setCertOrganizationalUnitName(mCertOrganizationalUnitName);
+        mCaptureTraffic = new CaptureTraffic(this.reactContext, this.mNetBare, this.cert);
 
     }
 
     @ReactMethod
     public void installCertificate(final Promise promise){
-        mCaptureTraffic = new CaptureTraffic(this.reactContext, this.mNetBare, this.cert);
         mCaptureTraffic.installCertificate(promise);
     }
 
@@ -84,10 +94,12 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
     @Override
     public void onServiceStarted() {
         Utils.sendEvent(this.reactContext, "onServiceStarted", null);
+        new EventProcessor<>("onServiceStarted", 1).execute();
     }
 
     @Override
     public void onServiceStopped() {
         Utils.sendEvent(this.reactContext, "onServiceStopped", null);
+        new EventProcessor<>("onServiceStopped", 1).execute();
     }
 }

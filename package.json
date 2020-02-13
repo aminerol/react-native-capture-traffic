@@ -1,34 +1,42 @@
 {
-  "name": "react-native-capture-traffic",
-  "title": "React Native Capture Traffic",
-  "version": "1.0.0",
+
+  "author": {
+    "name": "Amine Bl",
+    "email": "zazamine8@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/aminerol/react-native-capture-traffic/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "TODO",
+  "devDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
+  },
+  "homepage": "https://github.com/aminerol/react-native-capture-traffic#readme",
+  "keywords": [
+    "react-native"
+  ],
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "react-native-capture-traffic",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aminerol/react-native-capture-traffic.git",
     "baseUrl": "https://github.com/aminerol/react-native-capture-traffic"
   },
-  "keywords": [
-    "react-native"
-  ],
-  "author": {
-    "name": "Amine Bl",
-    "email": "zazamine8@gmail.com"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT",
-  "licenseFilename": "LICENSE",
-  "readmeFilename": "README.md",
-  "peerDependencies": {
-    "react": "^16.8.1",
-    "react-native": ">=0.59.0-rc.0 <1.0.x",
-    "react-native-electrode-bridge": "^1.5.19"
-  },
-  "devDependencies": {
-    "react": "^16.8.3",
-    "react-native": "^0.59.10"
+  "title": "React Native Capture Traffic",
+  "version": "1.0.2",
+  "dependencies": {
+    "react-native-electrode-bridge": "^1.5.23"
   }
 }

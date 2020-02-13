@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B3E7B58A1CC2AC0600A0062D /* RNCaptureTraffic.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNCaptureTraffic.m */; };
+		154154C7022B4CF88CEEE8A1 /* ElectrodeReactNativeBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF70DDC6B1E42A3BEB45977 /* ElectrodeReactNativeBridge.framework */; };
+		2F814D7395B24397A6A2DEFA /* ElectrodeReactNativeBridgeTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = D96FA1ED64C546C483858977 /* ElectrodeReactNativeBridgeTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +28,9 @@
 		134814201AA4EA6300B7C361 /* libRNCaptureTraffic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNCaptureTraffic.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNCaptureTraffic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCaptureTraffic.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNCaptureTraffic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCaptureTraffic.m; sourceTree = "<group>"; };
+		BD1A56E4AEC24EC18AF3F14E /* ElectrodeReactNativeBridge.xcodeproj */ = {isa = PBXFileReference; name = "ElectrodeReactNativeBridge.xcodeproj"; path = "../node_modules/react-native-electrode-bridge/ios/ElectrodeReactNativeBridge.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		BFF70DDC6B1E42A3BEB45977 /* ElectrodeReactNativeBridge.framework */ = {isa = PBXFileReference; name = "ElectrodeReactNativeBridge.framework"; path = "System/Library/Frameworks/ElectrodeReactNativeBridge.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		D96FA1ED64C546C483858977 /* ElectrodeReactNativeBridgeTests.xctest */ = {isa = PBXFileReference; name = "ElectrodeReactNativeBridgeTests.xctest"; path = "ElectrodeReactNativeBridgeTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				154154C7022B4CF88CEEE8A1 /* ElectrodeReactNativeBridge.framework in Frameworks */,
+				2F814D7395B24397A6A2DEFA /* ElectrodeReactNativeBridgeTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,8 +60,18 @@
 				B3E7B5881CC2AC0600A0062D /* RNCaptureTraffic.h */,
 				B3E7B5891CC2AC0600A0062D /* RNCaptureTraffic.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				F817852B454D4A549C04E5B9 /* Libraries */,
 			);
 			sourceTree = "<group>";
+		};
+		F817852B454D4A549C04E5B9 /* Libraries */ = {
+			isa = "PBXGroup";
+			children = (
+				BD1A56E4AEC24EC18AF3F14E /* ElectrodeReactNativeBridge.xcodeproj */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -82,7 +99,7 @@
 		58B511D31A9E6C8500147676 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 920;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
@@ -216,12 +233,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/RNCaptureTraffic/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/RNCaptureTraffic\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNCaptureTraffic;
 				SKIP_INSTALL = YES;
@@ -237,7 +258,11 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/RNCaptureTraffic/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/RNCaptureTraffic\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNCaptureTraffic;
 				SKIP_INSTALL = YES;

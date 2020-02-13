@@ -1,49 +1,39 @@
-import { NativeEventEmitter, NativeModules } from 'react-native';
-
+import { NativeModules } from 'react-native';
+import { electrodeBridge } from 'react-native-electrode-bridge';
 const { RNCaptureTraffic } = NativeModules;
-const eventEmitter = new NativeEventEmitter(RNCaptureTraffic);
+const _subscriptions = Array();
 
-const eventMap = {
-    serviceStarted: 'onServiceStarted',
-    serviceStopped: 'onServiceStopped',
+const vpnStarted = (handler) => {
+  const eventId = electrodeBridge.registerEventListener("onServiceStarted", handler);
+  _subscriptions.push(eventId);
+  return {
+    remove: () => removeEventListener(eventId),
+  };
 };
-const _subscriptions = new Map();
+const vpnStopped = (handler) => {
+  const eventId = electrodeBridge.registerEventListener("onServiceStopped", handler);
+  _subscriptions.push(eventId);
+  return {
+    remove: () => removeEventListener(eventId),
+  };
+};
 
-const addEventListener = (event, handler) => {
-    const mappedEvent = eventMap[event];
-    if (mappedEvent) {
-      const listener = eventEmitter.addListener(mappedEvent, handler);
-      _subscriptions.set(handler, listener);
-      return {
-        remove: () => removeEventListener(event, handler),
-      };
-    } else {
-      console.warn(`Trying to subscribe to unknown event: "${event}"`);
-      return {
-        remove: () => {},
-      };
-    }
-  };
-  
-  const removeEventListener = (type, handler) => {
-    const listener = _subscriptions.get(handler);
-    if (!listener) {
-      return;
-    }
-    listener.remove();
-    _subscriptions.delete(handler);
-  };
-  
-  const removeAllListeners = () => {
-    _subscriptions.forEach((listener, key, map) => {
-      listener.remove();
-      map.delete(key);
-    });
-  };
+const removeEventListener = (eventId) => {
+  electrodeBridge.removeEventListener(eventId)
+  _subscriptions = _subscriptions.filter(item => item !== eventId)
+};
+
+const removeAllListeners = () => {
+  _subscriptions.forEach((key, index, map) => {
+    electrodeBridge.removeEventListener(key);
+    map.delete(key);
+  });
+};
 
 export default {
     ...RNCaptureTraffic,
-    addEventListener,
+    vpnStarted,
+    vpnStopped,
     removeEventListener,
     removeAllListeners,
 };
