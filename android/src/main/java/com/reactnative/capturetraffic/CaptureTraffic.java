@@ -97,7 +97,8 @@ public class CaptureTraffic implements ActivityEventListener {
     }
 
     private List<HttpInterceptorFactory> interceptorFactories() {
-        HttpInterceptorFactory injector1 = HttpInjectInterceptor.createFactory(new HttpInjector());
-        return Arrays.asList(injector1);
+        HttpInterceptorFactory injector1 = HttpInjector.createFactory();
+        HttpInterceptorFactory testInjector = HttpInjectInterceptor.createFactory(new TestInjector());
+        return Arrays.asList(injector1, testInjector);
     }
 }
