@@ -93,13 +93,11 @@ public class RNCaptureTrafficModule extends ReactContextBaseJavaModule implement
 
     @Override
     public void onServiceStarted() {
-        Utils.sendEvent(this.reactContext, "onServiceStarted", null);
         new EventProcessor<>("onServiceStarted", 1).execute();
     }
 
     @Override
     public void onServiceStopped() {
-        Utils.sendEvent(this.reactContext, "onServiceStopped", null);
         new EventProcessor<>("onServiceStopped", 1).execute();
     }
 }
