@@ -38,7 +38,7 @@ import com.github.megatronking.netbare.ssl.SSLEngineFactory;
  * @author Megatron King
  * @since 2018-10-08 21:09
  */
-public class NetBareService extends VpnService {
+public abstract class NetBareService extends VpnService {
 
     /**
      * Start capturing target app's net packets.
@@ -58,7 +58,7 @@ public class NetBareService extends VpnService {
      *
      * @return The identifier
      */
-    //protected abstract int notificationId();
+    protected abstract int notificationId();
 
     /**
      * A {@link Notification} object describing what to show the user. Must not be null.
@@ -66,7 +66,7 @@ public class NetBareService extends VpnService {
      * @return The Notification to be displayed.
      */
     @NonNull
-    //protected abstract Notification createNotification();
+    protected abstract Notification createNotification();
 
     private NetBareThread mNetBareThread;
 
@@ -78,10 +78,10 @@ public class NetBareService extends VpnService {
         String action = intent.getAction();
         if (ACTION_START.equals(action)) {
             startNetBare();
-            //startForeground(notificationId(), createNotification());
+            startForeground(notificationId(), createNotification());
         } else if (ACTION_STOP.equals(action)) {
             stopNetBare();
-            //stopForeground(true);
+            stopForeground(true);
             stopSelf();
         } else {
             stopSelf();
