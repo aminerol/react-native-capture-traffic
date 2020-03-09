@@ -1,39 +1,30 @@
-import { NativeModules } from 'react-native';
-import { electrodeBridge } from 'react-native-electrode-bridge';
-const { RNCaptureTraffic } = NativeModules;
-const _subscriptions = Array();
+import {NativeModules} from 'react-native';
+import {registerEvent, registerRequest, removeAllListeners} from './utils';
+const {RNCaptureTraffic} = NativeModules;
 
-const vpnStarted = (handler) => {
-  const eventId = electrodeBridge.registerEventListener("onServiceStarted", handler);
-  _subscriptions.push(eventId);
-  return {
-    remove: () => removeEventListener(eventId),
-  };
+const vpnStarted = handler => {
+  return registerEvent('onServiceStarted', handler);
 };
-const vpnStopped = (handler) => {
-  const eventId = electrodeBridge.registerEventListener("onServiceStopped", handler);
-  _subscriptions.push(eventId);
-  return {
-    remove: () => removeEventListener(eventId),
-  };
+const vpnStopped = handler => {
+  return registerEvent('onServiceStopped', handler);
 };
 
-const removeEventListener = (eventId) => {
-  electrodeBridge.removeEventListener(eventId)
-  _subscriptions = _subscriptions.filter(item => item !== eventId)
+const shouldIntercept = handler => {
+  return registerRequest('shouldIntercept', handler);
 };
-
-const removeAllListeners = () => {
-  _subscriptions.forEach((key, index, map) => {
-    electrodeBridge.removeEventListener(key);
-    map.delete(key);
-  });
+const onRequestHeaders = handler => {
+  return registerEvent('onRequestHeaders', handler);
+};
+const onRequestBody = handler => {
+  return registerRequest('onRequestBody', handler);
 };
 
 export default {
-    ...RNCaptureTraffic,
-    vpnStarted,
-    vpnStopped,
-    removeEventListener,
-    removeAllListeners,
+  ...RNCaptureTraffic,
+  vpnStarted,
+  vpnStopped,
+  shouldIntercept,
+  onRequestHeaders,
+  onRequestBody,
+  removeAllListeners,
 };

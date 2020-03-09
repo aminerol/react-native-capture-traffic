@@ -10,10 +10,6 @@
   "bundleDependencies": false,
   "deprecated": false,
   "description": "TODO",
-  "devDependencies": {
-    "react": "^16.8.3",
-    "react-native": "^0.59.10"
-  },
   "homepage": "https://github.com/aminerol/react-native-capture-traffic#readme",
   "keywords": [
     "react-native"
@@ -24,7 +20,8 @@
   "name": "react-native-capture-traffic",
   "peerDependencies": {
     "react": "^16.8.1",
-    "react-native": ">=0.59.0-rc.0 <1.0.x"
+    "react-native": ">=0.59.0-rc.0 <1.0.x",
+    "react-native-electrode-bridge": "^1.5.19"
   },
   "repository": {
     "type": "git",
@@ -36,7 +33,4 @@
   },
   "title": "React Native Capture Traffic",
   "version": "1.0.2",
-  "dependencies": {
-    "react-native-electrode-bridge": "^1.5.23"
-  }
 }
