@@ -98,13 +98,13 @@ public final class HttpRequestHeaderPart extends HttpHeaderPart {
 
         private HttpMethod method;
 
-        Builder(HttpProtocol protocol, Uri uri, Map<String, List<String>> headers,
-                HttpMethod method) {
+        public Builder(HttpProtocol protocol, Uri uri, Map<String, List<String>> headers,
+                       HttpMethod method) {
             super(protocol, uri, headers);
             this.method = method;
         }
 
-        Builder(HttpRequestHeaderPart requestHeader) {
+        public Builder(HttpRequestHeaderPart requestHeader) {
             super(requestHeader);
             this.method = requestHeader.method;
         }

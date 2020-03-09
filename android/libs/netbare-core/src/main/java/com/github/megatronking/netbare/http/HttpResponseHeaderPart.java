@@ -73,14 +73,14 @@ public final class HttpResponseHeaderPart extends HttpHeaderPart {
         private int code;
         private String message;
 
-        Builder(HttpProtocol protocol, Uri uri, Map<String, List<String>> headers,
+        public Builder(HttpProtocol protocol, Uri uri, Map<String, List<String>> headers,
                        int code, String message) {
             super(protocol, uri, headers);
             this.code = code;
             this.message = message;
         }
 
-        Builder(HttpResponseHeaderPart responseHeader) {
+        public Builder(HttpResponseHeaderPart responseHeader) {
             super(responseHeader);
             this.code = responseHeader.code;
             this.message = responseHeader.message;
