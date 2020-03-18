@@ -22,5 +22,7 @@ export const registerEvent = (eventName, handler) => {
 };
 
 export const registerRequest = (requestName, handler) => {
-  electrodeBridge.registerRequestHandler(requestName, handler);
+  if (!electrodeBridge.requestHandlerByRequestName.has(requestName)) {
+    electrodeBridge.registerRequestHandler(requestName, handler);
+  }
 };
